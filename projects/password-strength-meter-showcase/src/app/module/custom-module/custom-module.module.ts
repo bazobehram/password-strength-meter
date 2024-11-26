@@ -9,18 +9,18 @@ import { CustomComponentComponent } from './custom-component/custom-component.co
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [CustomComponentComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: CustomComponentComponent,
-      },
-    ]),
-    FormsModule,
-    PasswordStrengthMeterComponent,
-  ],
-  providers: [provideZxvbnServiceForPSM()],
+    imports: [
+        CommonModule,
+        RouterModule.forChild([
+            {
+                path: '',
+                component: CustomComponentComponent,
+            },
+        ]),
+        FormsModule,
+        PasswordStrengthMeterComponent,
+        CustomComponentComponent,
+    ],
+    providers: [provideZxvbnServiceForPSM()],
 })
 export class CustomModuleModule {}

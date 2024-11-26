@@ -1,105 +1,92 @@
-[![CI](https://github.com/antoantonyk/password-strength-meter/actions/workflows/ci-workflow.yml/badge.svg)](https://github.com/antoantonyk/password-strength-meter/actions/workflows/ci-workflow.yml)
-[![npm version](https://badge.fury.io/js/angular-password-strength-meter.svg)](https://badge.fury.io/js/angular-password-strength-meter)
-[![Coverage Status](https://coveralls.io/repos/github/antoantonyk/password-strength-meter/badge.svg?branch=master)](https://coveralls.io/github/antoantonyk/password-strength-meter?branch=master)
 
-# Password Strength Meter For Angular 17
+# Password Strength Meter for Angular 18
 
-To display the strength of the password with a visual feedback.
+[![CI](https://github.com/bazobehram/password-strength-meter/actions/workflows/ci-workflow.yml/badge.svg)](https://github.com/bazobehram/password-strength-meter/actions/workflows/ci-workflow.yml)
+[![npm version](https://badge.fury.io/js/password-strength-meter.svg)](https://badge.fury.io/js/password-strength-meter)
+[![Coverage Status](https://coveralls.io/repos/github/bazobehram/password-strength-meter/badge.svg?branch=main)](https://coveralls.io/github/bazobehram/password-strength-meter?branch=main)
+
+A customizable and updated password strength meter library for Angular applications, built using Angular 18 with standalone component support.
+
+---
+
+Password Strength Meter use zxcvbn to estimate the strength of the password and also provide a visual feedback with suggestions and warning messages.
 
 [Password Strength Meter](https://www.npmjs.com/package/angular-password-strength-meter) use [zxcvbn](https://github.com/zxcvbn-ts/zxcvbn) to estimate the strength of the password and also provide a visual feedback with suggestions and warning messages.
 
-This lib was developed based on the following [tutorial](https://scotch.io/tutorials/password-strength-meter-in-angularjs).
+## Features
+- Updated to Angular v18.
+- Full support for standalone component architecture.
+- Visual password strength feedback with suggestions and warnings.
+- Uses [zxcvbn](https://github.com/zxcvbn-ts/zxcvbn) for robust password strength estimation.
+- Customizable styles, behavior, and feedback.
 
-How then is password strength measured? `Dropbox developed an algorithm for a realistic password strength estimator inspired by password crackers. This algorithm is packaged in a Javascript library called zxcvbn. In addition, the package contains a dictionary of commonly used English words, names and passwords.`
+---
 
-Need lib for Vue.js? [Click here](https://github.com/antoantonyk/vue-password-strength-meter)
+## Demo
+[Live Demo](https://bazobehram.github.io/password-strength-meter/)
 
-# Demo
+---
 
-[See Demo Here](https://antoantonyk.github.io/password-strength-meter/)
+## Installation
 
-```html
-<password-strength-meter [password]="password"></password-strength-meter>
+Install the library and its dependencies:
+```bash
+npm install @zxcvbn-ts/core @zxcvbn-ts/language-en password-strength-meter
 ```
 
-[stackblitz](https://stackblitz.com/edit/stackblitz-starters-tz9tse?file=src%2Fmain.ts)
+---
 
-## Get Started
+## Usage
 
-**Step 1:** npm install (For Angular v17)
+### Step 1: Import and Use the Component
 
-```sh
-npm install @zxcvbn-ts/core@^3.0.0 @zxcvbn-ts/language-en@^3.0.0 angular-password-strength-meter --save
+Import the `PasswordStrengthMeterComponent` directly into your application as it supports standalone components.
+
+```typescript
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { PasswordStrengthMeterComponent } from 'password-strength-meter';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule, PasswordStrengthMeterComponent],
+  template: `
+    <input [(ngModel)]="password" type="password" placeholder="Enter password" />
+    <password-strength-meter [password]="password" enableFeedback></password-strength-meter>
+  `,
+})
+export class AppComponent {
+  password: string = '';
+}
 ```
 
-For Angular v15
+### Step 2: Configure zxcvbn Service
 
-```sh
-npm install @zxcvbn-ts/core@^3.0.0 @zxcvbn-ts/language-en@^3.0.0 angular-password-strength-meter@^8.0.0 --save
-```
+To enable the default zxcvbn service for password strength estimation, configure your application as shown below:
 
-**Optional Packages:** zxcvbn packagase are not required if PasswordStrengthMeterModule is using with a custom implementation of IPasswordStrengthMeterService .
-
-**Step 2:** Use the provideZxvbnServiceForPSM in appConfig
-
-```ts
-....
+```typescript
 import { bootstrapApplication } from '@angular/platform-browser';
 import { ApplicationConfig } from '@angular/core';
-import { provideZxvbnServiceForPSM } from 'angular-password-strength-meter/zxcvbn';
-....
+import { provideZxvbnServiceForPSM } from 'password-strength-meter/zxcvbn';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZxvbnServiceForPSM()],
 };
 
-bootstrapApplication(AppComponent, appConfig).catch((err) =>
-  console.error(err)
-);
-
+bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));
 ```
 
-**Step 3:** Import the PasswordStrengthMeterComponent component in your app.component.ts
+---
 
-```ts
-....
-import { PasswordStrengthMeterComponent } from 'angular-password-strength-meter';
-....
+## Customization
 
-@Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    CommonModule,
-    PasswordStrengthMeterComponent,
-  ],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-})
-export class AppComponent {
-  password: string = '';
-}
+### Override zxcvbn Options
+You can customize the zxcvbn service by providing a custom configuration:
 
-```
-
-**Step 4:** use the password-strength-meter component in your app.component.html
-
-```html
-<password-strength-meter [password]="password" enableFeedback />
-```
-
-## Use custom zxcvbn options for the password strength meter
-
-You can override the default zxcvbn options by providing the config to provideZxvbnServiceForPSM(config?: ZxvbnConfigType)
-
-```ts
-....
-import { bootstrapApplication } from '@angular/platform-browser';
-import { ApplicationConfig } from '@angular/core';
-
+```typescript
 import { translations } from '@zxcvbn-ts/language-en';
-import { provideZxvbnServiceForPSM, ZxvbnConfigType } from 'angular-password-strength-meter/zxcvbn';
-....
+import { provideZxvbnServiceForPSM, ZxvbnConfigType } from 'password-strength-meter/zxcvbn';
 
 const zxvbnConfig: ZxvbnConfigType = {
   translations: translations,
@@ -108,80 +95,49 @@ const zxvbnConfig: ZxvbnConfigType = {
 export const appConfig: ApplicationConfig = {
   providers: [provideZxvbnServiceForPSM(zxvbnConfig)],
 };
-
-bootstrapApplication(AppComponent, appConfig).catch((err) =>
-  console.error(err)
-);
-
 ```
 
-Refer to the [zxcvbn documentation](https://zxcvbn-ts.github.io/zxcvbn/guide/getting-started) for more information.
+---
 
-## Use custom password strength meter service
+### Customize the Password Strength Service
 
-You can override the default password strength meter service by providing the [Custom Service class](./projects/password-strength-meter-showcase/src/app/services/custom-psm-service/custom-psm-service.service.ts)
+You can override the default password strength meter service by implementing the `IPasswordStrengthMeterService` interface.
 
-```ts
-....
+```typescript
 import { Injectable } from '@angular/core';
-import { IPasswordStrengthMeterService } from 'angular-password-strength-meter';
+import { IPasswordStrengthMeterService, FeedbackResult } from 'password-strength-meter';
 
 @Injectable()
-export class CustomPsmServiceService extends IPasswordStrengthMeterService {
+export class CustomPasswordStrengthService extends IPasswordStrengthMeterService {
   score(password: string): number {
-    // TODO - return score 0 - 4 based on password
-    return 1;
+    return password.length > 10 ? 4 : 2;
   }
 
   scoreWithFeedback(password: string): FeedbackResult {
-    // TODO - return score with feedback
-    return { score: 1, feedback: { warning: '', suggestions: [] } };
-  }
-
-   scoreAsync(password: string): Promise<number> {
-    // TODO - do some async operation
-    return new Promise();
-  }
-
-  scoreWithFeedbackAsync(password: string): Promise<FeedbackResult> {
-    // TODO - do some async operation
-    return new Promise();
+    return {
+      score: this.score(password),
+      feedback: { warning: '', suggestions: [] },
+    };
   }
 }
-....
-
-@Component({
-  selector: 'app-custom-service',
-  standalone: true,
-  imports: [CommonModule, FormsModule, PasswordStrengthMeterComponent],
-  providers: [
-    {
-      provide: IPasswordStrengthMeterService,
-      useClass: CustomPsmServiceService,
-    },
-  ],
-  templateUrl: './custom-service.component.html',
-  styleUrl: './custom-service.component.scss',
-})
-export class CustomServiceComponent {
-  text: string = '';
-  score: number | null = null;
-
-  public onPasswordStrengthChange(score: number | null) {
-    this.score = score;
-  }
-}
-
 ```
 
-## API
+---
 
-| option                   |   bind   |   type   |                          default                           | description                                                                                                                                                                                                          |
-| :----------------------- | :------: | :------: | :--------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| password                 | Input()  |  string  |                             -                              | password to calculate its strength                                                                                                                                                                                   |
-| minPasswordLength        | Input()  |  number  |                             8                              | min length of password to calculate the strength                                                                                                                                                                     |
-| enableFeedback           | Input()  | boolean  |                           false                            | to show/hide the suggestions and warning messages                                                                                                                                                                    |
-| numberOfProgressBarItems | Input()  |  number  |                             5                              | change the number to update the number of progress bar items                                                                                                                                                         |
-| enableAsync              | Input()  | boolean  |                           false                            | to do the score calculation in async mode                                                                                                                                                                            |
-| colors                   | Input()  | string[] | ['darkred', 'orangered', 'orange', 'yellowgreen', 'green'] | to overide the meter colors, password strength range is 0 - 4, for strength 0 equals first color in the array and so on. <br /><br />Note - length of the colors array should match the number of progress bar items |
-| strengthChange           | Output() |  number  |                             -                              | emits the strength of the provided password in number -> range 0 - 4                                                                                                                                                 |
+## API Reference
+
+| Property                 |   Bind   |   Type   | Default Value                                      | Description                                                                                      |
+|--------------------------|:--------:|:--------:|---------------------------------------------------|--------------------------------------------------------------------------------------------------|
+| `password`               |  Input() |  string  | `null`                                            | The password string to evaluate.                                                                |
+| `minPasswordLength`      |  Input() |  number  | `8`                                               | Minimum password length to evaluate.                                                            |
+| `enableFeedback`         |  Input() | boolean  | `false`                                           | Whether to show feedback messages for strength evaluation.                                       |
+| `numberOfProgressBarItems` | Input() |  number  | `5`                                               | The number of segments in the progress bar.                                                     |
+| `enableAsync`            |  Input() | boolean  | `false`                                           | Whether to calculate password strength asynchronously.                                          |
+| `colors`                 |  Input() | string[] | `['darkred', 'orangered', 'orange', 'yellowgreen', 'green']` | Custom colors for progress bar segments, matching password strength levels (0–4).               |
+| `strengthChange`         | Output() |  number  | `null`                                            | Emits the calculated strength score for the provided password (0–4).                            |
+
+---
+
+## License
+
+This project is licensed under the [MIT License](https://github.com/bazobehram/password-strength-meter/blob/main/LICENSE).

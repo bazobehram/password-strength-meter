@@ -4,18 +4,12 @@
   "dependencies": {
     "tslib": "^2.5.0"
   },
-  "peerDependencies": {
-    "@angular/common": "^17.0.0",
-    "@angular/core": "^17.0.0",
-    "@zxcvbn-ts/core": "^3.0.0",
-    "@zxcvbn-ts/language-en": "^3.0.0"
-  },
   "author": {
-    "name": "Anto Antony",
-    "email": "antoantony8@gmail.com"
+    "name": "Behram Bazo",
+    "email": "bazobehram@hotmail.com"
   },
   "keywords": [
-    "angular 17",
+    "angular 18",
     "password-strength",
     "password-strength-component",
     "password-strength-meter",
@@ -24,11 +18,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/antoantonyk/password-strength-meter.git"
+    "url": "https://github.com/bazobehram/password-strength-meter.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/antoantonyk/password-strength-meter/issues"
+    "url": "https://github.com/bazobehram/password-strength-meter/issues"
   },
-  "homepage": "https://github.com/antoantonyk/password-strength-meter"
+  "homepage": "https://github.com/bazobehram/password-strength-meter"
 }

@@ -11,10 +11,9 @@ describe('CustomComponentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PasswordStrengthMeterComponent, FormsModule],
-      declarations: [CustomComponentComponent],
-      providers: [provideZxvbnServiceForPSM()],
-    }).compileComponents();
+    imports: [PasswordStrengthMeterComponent, FormsModule, CustomComponentComponent],
+    providers: [provideZxvbnServiceForPSM()],
+}).compileComponents();
 
     fixture = TestBed.createComponent(CustomComponentComponent);
     component = fixture.componentInstance;
